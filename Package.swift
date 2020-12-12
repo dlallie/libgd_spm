@@ -7,12 +7,16 @@ let package = Package(
         .library(
             name: "gd",
             targets: ["gd"]
-        )
+        ),
+        .executable(name: "SwiftyG", targets: ["SwiftyG"])
     ],
     targets: [
         .target(
             name: "gd",
             dependencies: []
-        )
+        ),
+        .target(name: "SwiftyG", dependencies: [
+            "gd"
+        ])
     ]
 )

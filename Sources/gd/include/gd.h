@@ -1630,9 +1630,6 @@ BGD_DECLARE(int) gdReleaseVersion(void);
 BGD_DECLARE(const char *) gdExtraVersion(void);
 BGD_DECLARE(const char *) gdVersionString(void);
 
-/* newfangled special effects */
-#include "gdfx.h"
-
 #ifdef __cplusplus
 }
 #endif
