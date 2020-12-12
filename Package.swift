@@ -6,12 +6,12 @@ let package = Package(
     products: [
         .library(
             name: "gd",
-            targets: ["libgd_spm"]
+            targets: ["gd"]
         )
     ],
     targets: [
         .target(
-            name: "libgd_spm",
+            name: "gd",
             dependencies: []
         )
     ]
