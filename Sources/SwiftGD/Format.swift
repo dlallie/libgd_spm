@@ -112,7 +112,7 @@ extension LibGdParametrizableExportFormatter {
 }
 
 // MARK: - Concrete LibGd Formatter
-
+/*
 /// Defines a formatter to be used on BMP import & export conversions
 private struct BMPFormatter: LibGdParametrizableFormatter {
     /// The parameters to apply on exports
@@ -132,7 +132,7 @@ private struct BMPFormatter: LibGdParametrizableFormatter {
 
     /// Function pointer to libgd's built-in bmp image export function
     fileprivate let exportFunction: (gdImagePtr, UnsafeMutablePointer<Int32>, Int32) -> UnsafeMutableRawPointer? = gdImageBmpPtr
-}
+}*/
 
 /// Defines a formatter to be used on GIF import & export conversions
 private struct GIFFormatter: LibGdFormatter {
@@ -175,6 +175,7 @@ private struct PNGFormatter: LibGdFormatter {
     fileprivate let exportFunction: (gdImagePtr, UnsafeMutablePointer<Int32>) -> UnsafeMutableRawPointer? = gdImagePngPtr
 }
 
+/*
 /// Defines a formatter to be used on TIFF import & export conversions
 private struct TIFFFormatter: LibGdFormatter {
     /// Function pointer to libgd's built-in tiff image create function
@@ -188,7 +189,7 @@ private struct TIFFFormatter: LibGdFormatter {
 private struct TGAFormatter: LibGdImportableFormatter {
     /// Function pointer to libgd's built-in tga image create function
     fileprivate let importFunction: (Int32, UnsafeMutableRawPointer) -> gdImagePtr? = gdImageCreateFromTgaPtr
-}
+}*/
 
 /// Defines a formatter to be used on WBMP import & export conversions
 private struct WBMPFormatter: LibGdParametrizableFormatter {
@@ -210,7 +211,7 @@ private struct WBMPFormatter: LibGdParametrizableFormatter {
     /// Function pointer to libgd's built-in wbmp image export function
     fileprivate let exportFunction: (gdImagePtr, UnsafeMutablePointer<Int32>, Int32) -> UnsafeMutableRawPointer? = gdImageWBMPPtr
 }
-
+/*
 /// Defines a formatter to be used on WEBP import & export conversions
 private struct WEBPFormatter: LibGdFormatter {
     /// Function pointer to libgd's built-in webp image create function
@@ -218,7 +219,7 @@ private struct WEBPFormatter: LibGdFormatter {
 
     /// Function pointer to libgd's built-in webp image export function
     fileprivate let exportFunction: (gdImagePtr, UnsafeMutablePointer<Int32>) -> UnsafeMutableRawPointer? = gdImageWebpPtr
-}
+}*/
 
 // MARK: - Convenience LibGd Format
 
@@ -234,14 +235,14 @@ private struct WEBPFormatter: LibGdFormatter {
 /// - webp: https://en.wikipedia.org/wiki/webp
 /// - any: Evaluates all of the above mentioned formats on import
 public enum ImportableFormat: ImportableFormatter {
-    case bmp
+    //case bmp
     case gif
     case jpg
     case png
-    case tiff
-    case tga
+    //case tiff
+    //case tga
     case wbmp
-    case webp
+    //case webp
     case any // Wildcard, will evaluate all of the above defined cases
 
     /// Creates a `gdImagePtr` from given image data.
@@ -251,17 +252,17 @@ public enum ImportableFormat: ImportableFormatter {
     /// - Throws: `Error` if import failed.
     public func imagePtr(of data: Data) throws -> gdImagePtr {
         switch self {
-        case .bmp: return try BMPFormatter().imagePtr(of: data)
+        //case .bmp: return try BMPFormatter().imagePtr(of: data)
         case .gif: return try GIFFormatter().imagePtr(of: data)
         case .jpg: return try JPGFormatter().imagePtr(of: data)
         case .png: return try PNGFormatter().imagePtr(of: data)
-        case .tiff: return try TIFFFormatter().imagePtr(of: data)
-        case .tga: return try TGAFormatter().imagePtr(of: data)
+        //case .tiff: return try TIFFFormatter().imagePtr(of: data)
+        //case .tga: return try TGAFormatter().imagePtr(of: data)
         case .wbmp: return try WBMPFormatter(index: -1).imagePtr(of: data)
-        case .webp: return try WEBPFormatter().imagePtr(of: data)
+        //case .webp: return try WEBPFormatter().imagePtr(of: data)
         case .any:
             return try ([
-                .jpg, .png, .gif, .webp, .tiff, .bmp, .wbmp
+                .jpg, .png, .gif, .wbmp
                 ] as [ImportableFormat]).imagePtr(of: data)
         }
     }
@@ -278,13 +279,13 @@ public enum ImportableFormat: ImportableFormatter {
 /// - webp: https://en.wikipedia.org/wiki/webp
 /// - any: Evaluates all of the above mentioned formats on export
 public enum ExportableFormat: ExportableFormatter {
-    case bmp(compression: Bool)
+    //case bmp(compression: Bool)
     case gif
     case jpg(quality: Int32)
     case png
-    case tiff
-    case wbmp(index: Int32)
-    case webp
+    //case tiff
+    //case wbmp(index: Int32)
+    //case webp
 
     /// Creates a data representation of given `gdImagePtr`.
     ///
@@ -295,15 +296,15 @@ public enum ExportableFormat: ExportableFormatter {
         switch self {
 
         // Parametrizable image raster format
-        case let .bmp(compression): return try BMPFormatter(compression: compression).data(of: imagePtr)
+        //case let .bmp(compression): return try BMPFormatter(compression: compression).data(of: imagePtr)
         case let .jpg(quality): return try JPGFormatter(quality: quality).data(of: imagePtr)
-        case let .wbmp(index): return try WBMPFormatter(index: index).data(of: imagePtr)
+        //case let .wbmp(index): return try WBMPFormatter(index: index).data(of: imagePtr)
 
         // None parametrizable image raster format
         case .gif: return try GIFFormatter().data(of: imagePtr)
         case .png: return try PNGFormatter().data(of: imagePtr)
-        case .tiff: return try TIFFFormatter().data(of: imagePtr)
-        case .webp: return try WEBPFormatter().data(of: imagePtr)
+        //case .tiff: return try TIFFFormatter().data(of: imagePtr)
+        //case .webp: return try WEBPFormatter().data(of: imagePtr)
         }
     }
 }

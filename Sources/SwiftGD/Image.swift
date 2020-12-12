@@ -37,21 +37,19 @@ public class Image {
     }
 
     public func resizedTo(width: Int, height: Int, applySmoothing: Bool = true) -> Image? {
-        applyInterpolation(enabled: applySmoothing, currentSize: size, newSize: Size(width: width, height: height))
-
-        guard let output = gdImageScale(internalImage, UInt32(width), UInt32(height)) else { return nil }
-        return Image(gdImage: output)
+        guard let scaledGdImage = gdImageCreate(Int32(width), Int32(height)) else { return nil }
+        
+        gdImageCopyResized(scaledGdImage, internalImage, 0, 0, 0, 0, Int32(width), Int32(height), Int32(size.width), Int32(size.height))
+        
+        return Image(gdImage: scaledGdImage)
     }
 
     public func resizedTo(width: Int, applySmoothing: Bool = true) -> Image? {
         let currentSize = size
         let heightAdjustment = Double(width) / Double(currentSize.width)
         let newSize = Size(width: Int32(width), height: Int32(Double(currentSize.height) * Double(heightAdjustment)))
-
-        applyInterpolation(enabled: applySmoothing, currentSize: currentSize, newSize: newSize)
-
-        guard let output = gdImageScale(internalImage, UInt32(newSize.width), UInt32(newSize.height)) else { return nil }
-        return Image(gdImage: output)
+        
+        return resizedTo(width: newSize.width, height: newSize.height)
     }
 
     public func resizedTo(height: Int, applySmoothing: Bool = true) -> Image? {
@@ -59,20 +57,19 @@ public class Image {
         let widthAdjustment = Double(height) / Double(currentSize.height)
         let newSize = Size(width: Int32(Double(currentSize.width) * Double(widthAdjustment)), height: Int32(height))
 
-        applyInterpolation(enabled: applySmoothing, currentSize: currentSize, newSize: newSize)
-
-        guard let output = gdImageScale(internalImage, UInt32(newSize.width), UInt32(height)) else { return nil }
-        return Image(gdImage: output)
+        return resizedTo(width: newSize.width, height: newSize.height)
     }
 
+    /*
     public func cropped(to rect: Rectangle) -> Image? {
         var rect = gdRect(x: Int32(rect.point.x), y: Int32(rect.point.y), width: Int32(rect.size.width), height: Int32(rect.size.height))
 
         guard let output = gdImageCrop(internalImage, &rect) else { return nil }
         return Image(gdImage: output)
     }
+ */
 
-    public func applyInterpolation(enabled: Bool, currentSize: Size, newSize: Size) {
+    /*public func applyInterpolation(enabled: Bool, currentSize: Size, newSize: Size) {
         guard enabled else {
             gdImageSetInterpolationMethod(internalImage, GD_NEAREST_NEIGHBOUR)
             return
@@ -85,7 +82,7 @@ public class Image {
         } else {
             gdImageSetInterpolationMethod(internalImage, GD_NEAREST_NEIGHBOUR)
         }
-    }
+    }*/
 
     public func fill(from: Point, color: Color) {
         let red = Int32(color.redComponent * 255.0)
@@ -174,6 +171,7 @@ public class Image {
         gdImageFilledRectangle(internalImage, Int32(topLeft.x), Int32(topLeft.y), Int32(bottomRight.x), Int32(bottomRight.y), internalColor)
     }
 
+    /*
     public func flip(_ mode: FlipMode) {
         switch mode {
         case .horizontal:
@@ -187,7 +185,7 @@ public class Image {
 
     public func pixelate(blockSize: Int) {
         gdImagePixelate(internalImage, Int32(blockSize), GD_PIXELATE_AVERAGE.rawValue)
-    }
+    }*/
 
     public func blur(radius: Int) {
         if let result = gdImageCopyGaussianBlurred(internalImage, Int32(radius), -1) {
@@ -196,7 +194,7 @@ public class Image {
         }
     }
 
-    public func colorize(using color: Color) {
+    /*public func colorize(using color: Color) {
         let red = Int32(color.redComponent * 255.0)
         let green = Int32(color.greenComponent * 255.0)
         let blue = Int32(color.blueComponent * 255.0)
@@ -206,7 +204,7 @@ public class Image {
 
     public func desaturate() {
         gdImageGrayScale(internalImage)
-    }
+    }*/
     
     /// Reduces `Image` to an indexed palatte of colors from larger color spaces.
     /// Index `Image`s only make sense with 2 or more oclors, and will `throw` nonsense values
