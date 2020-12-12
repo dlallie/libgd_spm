@@ -1,3 +1,0 @@
-module gd {
-	umbrella header "gd.h"
-}
