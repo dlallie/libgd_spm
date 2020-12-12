@@ -127,7 +127,7 @@ public class Image {
         return Color(red: r / 255, green: g / 255, blue: b / 255, alpha: 1 - (a / 127))
     }
 
-    public func strokeEllipse(center: Point, size: Size, color: Color) {
+    /* func strokeEllipse(center: Point, size: Size, color: Color) {
         let red = Int32(color.redComponent * 255.0)
         let green = Int32(color.greenComponent * 255.0)
         let blue = Int32(color.blueComponent * 255.0)
@@ -169,7 +169,7 @@ public class Image {
         defer { gdImageColorDeallocate(internalImage, internalColor) }
 
         gdImageFilledRectangle(internalImage, Int32(topLeft.x), Int32(topLeft.y), Int32(bottomRight.x), Int32(bottomRight.y), internalColor)
-    }
+    }*/
 
     /*
     public func flip(_ mode: FlipMode) {
