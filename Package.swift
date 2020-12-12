@@ -8,14 +8,14 @@ let package = Package(
             name: "gd",
             targets: ["gd"]
         ),
-        .executable(name: "SwiftyG", targets: ["SwiftyG"])
+        .library(name: "SwiftGD", targets: ["SwiftGD"])
     ],
     targets: [
         .target(
             name: "gd",
             dependencies: []
         ),
-        .target(name: "SwiftyG", dependencies: [
+        .target(name: "SwiftGD", dependencies: [
             "gd"
         ])
     ]
