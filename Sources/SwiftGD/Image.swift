@@ -1,11 +1,12 @@
 #if os(Linux)
-import Glibc
+    import Glibc
+    import gd_linux
 #else
-import Darwin
+    import Darwin
+    import gd_mac
 #endif
 
 import Foundation
-import gd
 
 // In case you were wondering: it's a class rather than a struct because we need
 // deinit to free the internal GD pointer, and that's only available to classes.

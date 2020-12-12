@@ -1,0 +1,11 @@
+module gd_mac [system] {
+    header "/usr/local/Cellar/gd/2.3.0/include/gd.h"
+    link "gd"
+    export *
+}
+
+module gd_linux [system] {
+    header "/usr/include/gd.h"
+    link "gd"
+    export *
+}

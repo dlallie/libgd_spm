@@ -1,11 +1,12 @@
 #if os(Linux)
     import Glibc
+    import gd_linux
 #else
     import Darwin
+    import gd_mac
 #endif
 
 import Foundation
-import gd
 
 // MARK: - Importable & Exportable Formatter
 

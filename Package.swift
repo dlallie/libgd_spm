@@ -5,15 +5,11 @@ let package = Package(
     name: "libgd_spm",
     products: [
         //.library(name: "libjpeg", targets: ["libjpeg"]),
-        .library(name: "gd", targets: ["gd"]),
+       // .library(name: "gd", targets: ["gd"]),
         .library(name: "SwiftGD", targets: ["SwiftGD"])
     ],
     targets: [
         /*.target(
-            name: "libjpeg",
-            dependencies: []
-        ),*/
-        .target(
             name: "gd",
             dependencies: [],
             cSettings: [
@@ -21,9 +17,10 @@ let package = Package(
                 .headerSearchPath("usr/include"),
                 .headerSearchPath("usr/local/Cellar/jpeg/9d/include")
             ]
-        ),
+        ),*/
+        .systemLibrary(name: "gd_spm"),
         .target(name: "SwiftGD", dependencies: [
-            "gd"
+            "gd_spm"
         ])
     ]
 )
