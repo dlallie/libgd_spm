@@ -562,31 +562,4 @@ strwidth (unsigned char *s)
 	return i;
 }
 
-#ifdef DEBUG
-int
-main ()
-{
-	unsigned char input[BUFSIZ];
-	unsigned char *output;
-	unsigned char *str;
-	int c, i = 0;
-
-	while ((c = fgetc (stdin)) != '\n' && i < BUFSIZ)
-		input[i++] = c;
-	input[i] = '\0';
-
-	printf ("input : %d bytes\n", strlen ((const char *) input));
-	printf ("output: %d bytes\n", strwidth (input));
-
-	output = (unsigned char *) gdMalloc (BUFSIZ);
-	any2eucjp (output, input, BUFSIZ);
-	str = output;
-	while (*str != '\0')
-		putchar (*(str++));
-	putchar ('\n');
-	gdFree (output);
-
-	return 0;
-}
-#endif
 #endif
