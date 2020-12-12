@@ -13,7 +13,10 @@ let package = Package(
     targets: [
         .target(
             name: "gd",
-            dependencies: []
+            dependencies: [],
+            cSettings: [
+                .define("HAVE_LIBJPEG")
+            ]
         ),
         .target(name: "SwiftGD", dependencies: [
             "gd"
