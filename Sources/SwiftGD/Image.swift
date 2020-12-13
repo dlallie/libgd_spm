@@ -37,7 +37,7 @@ public class Image {
     }
 
     public func resizedTo(width: Int, height: Int, applySmoothing: Bool = true) -> Image? {
-        guard let scaledGdImage = gdImageCreate(Int32(width), Int32(height)) else { return nil }
+        guard let scaledGdImage = gdImageCreateTrueColor(Int32(width), Int32(height)) else { return nil }
         
         gdImageCopyResized(scaledGdImage, internalImage, 0, 0, 0, 0, Int32(width), Int32(height), Int32(size.width), Int32(size.height))
         
