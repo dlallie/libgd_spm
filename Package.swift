@@ -18,7 +18,7 @@ let package = Package(
                 .headerSearchPath("usr/local/Cellar/jpeg/9d/include")
             ]
         ),*/
-        .systemLibrary(name: "gd_spm"),
+        .systemLibrary(name: "gd_spm", pkgConfig: "gdlib", providers: [.apt(["libgd-dev"])]),
         .target(name: "SwiftGD", dependencies: [
             "gd_spm"
         ])
